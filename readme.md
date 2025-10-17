@@ -30,7 +30,6 @@ install the cluster or any packages.
 ![KTHW AWS architecture (single-AZ VPC, bastion, private Debian nodes)](docs/tf-kthwdrawio.png)
 
 
-## How to use this repo
 
 [![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](https://github.com/features/actions)
