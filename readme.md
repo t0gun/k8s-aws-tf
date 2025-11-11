@@ -1,6 +1,6 @@
 [![Terraform CI](https://github.com/t0gun/kthw-aws-terraform/actions/workflows/terraform.yml/badge.svg?branch=main)](https://github.com/t0gun/kthw-aws-terraform/actions/workflows/terraform.yml)      
 # Kubernetes the Hard Way Infrastructure Automation
-This repo provisions the AWS network and compute needed to help you run [Kelsey Hightower’s *Kubernetes The Hard
+This repo provisions the AWS network and compute needed to help  run [Kelsey Hightower’s *Kubernetes The Hard
 Way*](https://github.com/kelseyhightower/kubernetes-the-hard-way). It only spins up the infrastructure and does not
 install the cluster or any packages.
 
