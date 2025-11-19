@@ -92,7 +92,6 @@ data "aws_caller_identity"  "me" {}  # we use it for access to account id
 
 # Names  I will use in prod code later
 locals {
-  project = "k8s-aws-tf"
   ec2_role_name = "k8s-ec2-ssm-role"
   ec2_profile_name = "k8s-ec2-ssm-profile"
   ec2_role_arn = "arn:aws:iam::${data.aws_caller_identity.me.account_id}:role/${local.ec2_role_name}"
@@ -117,14 +116,14 @@ resource "aws_iam_policy" "tf_apply_for_k8s_aws" {
           "iam:AddRoleToInstanceProfile","iam:RemoveRoleFromInstanceProfile",
           "iam:ListAttachedRolePolicies","iam:GetInstanceProfile","iam:TagInstanceProfile","iam:UntagInstanceProfile"
         ],
-        "Resource":[ "${local.ec2_role_arn}", "${local.ec2_profile_arn}"]
+        "Resource":[ local.ec2_role_arn, local.ec2_profile_arn]
       },
 
       # PassRole only for the EC2 instance role, and only to the EC2 service
       {
         "Effect":"Allow",
         "Action":"iam:PassRole",
-        "Resource": "${local.ec2_role_arn}",
+        "Resource": local.ec2_role_arn,
         "Condition": { "StringEquals": { "iam:PassedToService": "ec2.amazonaws.com" } }
       },
     ]
