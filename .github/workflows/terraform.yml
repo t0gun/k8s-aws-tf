@@ -64,7 +64,6 @@ jobs:
     # Only run this job when explicitly requested
     if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy'
 
-    # This is the safety barrier: configure env "prod" in Settings → Environments
     environment:
       name: prod
 

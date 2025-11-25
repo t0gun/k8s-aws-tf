@@ -7,7 +7,7 @@ Way*](https://github.com/kelseyhightower/kubernetes-the-hard-way). It only spins
 install the cluster or any packages.
 
 my previous setup using bastion, NAT gateway, public and private subnet but i have decided to make it minimal. i use a
-single private subnet with no NAT, NO SSH and VPC endpoints for internal AWS connectivity. 
+single private subnet with no NAT, NO SSH and VPC endpoints for internal AWS connectivity. modified re
 
 [![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](https://github.com/features/actions)
