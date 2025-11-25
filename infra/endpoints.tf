@@ -79,3 +79,15 @@ resource "aws_vpc_endpoint" "ssmmessages" {
     Scope     = "network"
   }
 }
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = aws_vpc.main.id
+  vpc_endpoint_type = "Gateway"
+  service_name      = "com.amazonaws.${var.region}.s3"
+  route_table_ids   = [aws_route_table.routing.id]
+
+  tags = {
+    Name      = "k8-aws-tf-s3-endpoint"
+    ManagedBy = "terraform"
+  }
+}
