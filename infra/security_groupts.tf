@@ -18,15 +18,14 @@ resource "aws_security_group" "nodes" {
     to_port          = -1
     protocol         = "icmp"
     cidr_blocks      = [aws_vpc.main.cidr_block]
-    ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
   }
 
-  egress { # ipv6 eigw for apt git and binaries
+  egress { # Outbound HTTP/HTTPS over IPv4 via NAT
     description      = "http egress"
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
-    ipv6_cidr_blocks = ["::/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -34,13 +33,6 @@ resource "aws_security_group" "nodes" {
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
-    ipv6_cidr_blocks = ["::/0"]
-  }
-  egress {
-    description = "HTTPS egress for bootstrap (IPv4)"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
