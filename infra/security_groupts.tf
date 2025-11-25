@@ -36,7 +36,14 @@ resource "aws_security_group" "nodes" {
     protocol         = "tcp"
     ipv6_cidr_blocks = ["::/0"]
   }
-
+  # Allow HTTPS to SSM interface endpoints over IPv4
+  egress {
+    description       = "HTTPS to SSM endpoints (IPv4)"
+    from_port         = 443
+    to_port           = 443
+    protocol          = "tcp"
+    security_groups   = [aws_security_group.ssm_endpoints.id]
+  }
   tags = {
     Name      = "k8-aws-tf-nodes-sg"
     ManagedBy = "terraform"

@@ -20,9 +20,10 @@ data "aws_iam_policy_document" "gha_trust" {
       variable = "token.actions.githubusercontent.com:aud"
     }
 
+    # TEMP: allow any ref in this repo
     condition {
       test     = "StringLike"
-      values   = [for r in var.allowed_refs : "repo:${var.github_repo}:ref:${r}"]
+      values   = ["repo:t0gun/k8s-aws-tf:*"]
       variable = "token.actions.githubusercontent.com:sub"
     }
   }
@@ -114,7 +115,8 @@ resource "aws_iam_policy" "tf_apply_for_k8s_aws" {
           "iam:AttachRolePolicy","iam:DetachRolePolicy",
           "iam:CreateInstanceProfile","iam:DeleteInstanceProfile",
           "iam:AddRoleToInstanceProfile","iam:RemoveRoleFromInstanceProfile",
-          "iam:ListAttachedRolePolicies","iam:GetInstanceProfile","iam:TagInstanceProfile","iam:UntagInstanceProfile"
+          "iam:ListAttachedRolePolicies","iam:GetInstanceProfile","iam:TagInstanceProfile","iam:UntagInstanceProfile",
+          "iam:ListRolePolicies", "iam:GetRolePolicy", "iam:ListInstanceProfilesForRole"
         ],
         "Resource":[ local.ec2_role_arn, local.ec2_profile_arn]
       },
