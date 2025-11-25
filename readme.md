@@ -6,8 +6,12 @@ This repo provisions the AWS network and compute needed to run [Kelsey Hightower
 Way*](https://github.com/kelseyhightower/kubernetes-the-hard-way). It only spins up the infrastructure and does not
 install the cluster or any packages.
 
-my previous setup uses bastion, NAT gateway,SSH Access, public and private subnet but i have decided to make it minimal. i use a
-single private subnet with no NAT, NO SSH, AWS SSN for access and VPC endpoints for internal AWS connectivity. 
+my previous setup uses bastion, NAT gateway,SSH Access, public and private subnet but i have decided to make it minimal.
+i use a
+single private subnet with no NAT, NO SSH, AWS SSM for access and VPC endpoints for internal AWS connectivity.
+infra is done but i haven't tidied up my documentation and usage. if you are familiar with the old environment or you
+are
+an hiring manager with my resume inspecting my codebase.you should be patient life some times get in the way
 
 [![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](https://github.com/features/actions)
