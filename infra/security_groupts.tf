@@ -37,11 +37,11 @@ resource "aws_security_group" "nodes" {
     ipv6_cidr_blocks = ["::/0"]
   }
   egress {
-    description  = "HTTPS to VPC (IPv4) - for SSM endpoints"
-    from_port    = 443
-    to_port      = 443
-    protocol     = "tcp"
-    cidr_blocks  = [aws_vpc.main.cidr_block]
+    description = "HTTPS egress for bootstrap (IPv4)"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
