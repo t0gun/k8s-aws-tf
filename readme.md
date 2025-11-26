@@ -5,7 +5,7 @@
 You have heard of the popular [Kubernetes The Hard
 Way](https://github.com/kelseyhightower/kubernetes-the-hard-way). This project version is rebuilt on AWS using modern
 infrastructure patterns.it automates the entire compute layer, eliminating jumpbox, SSH and makes every machine
-reachable through SSM.Amazon linux was also adapted for this project due to its preinstalled SSM agent eliminating the
+reachable through SSM (AWS Session Manager) .Amazon linux was also adapted for this project due to its preinstalled SSM agent eliminating the
 need for user data.If you want to understand Kubernetes properly, but you also want a clean, automated setup that
 doesn’t break core AWS security principles, you can fork this repo and read my guide.
 
