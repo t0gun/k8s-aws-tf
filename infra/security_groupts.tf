@@ -12,6 +12,13 @@ resource "aws_security_group" "nodes" {
     self      = true # allow traffic from resources using same sg
   }
 
+  ingress {
+    protocol = "icmp"
+    to_port = -1
+    from_port = -1
+    cidr_blocks = [aws_vpc.main.cidr_block]
+  }
+
   egress {
     description = "ICMP egress to VPC"
     from_port   = -1
@@ -19,6 +26,7 @@ resource "aws_security_group" "nodes" {
     protocol    = "icmp"
     cidr_blocks = [aws_vpc.main.cidr_block]
   }
+
 
   egress { # Outbound HTTP/HTTPS over IPv4 via NAT
     description      = "http egress"
