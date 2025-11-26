@@ -9,7 +9,7 @@ reachable through SSM.Amazon linux was also adapted for this project due to its 
 need for user data.If you want to understand Kubernetes properly, but you also want a clean, automated setup that
 doesn’t break core AWS security principles, you can fork this repo and read my guide.
 
-(in progress)
+(in progress)   
 [![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](https://github.com/features/actions)
 [![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
