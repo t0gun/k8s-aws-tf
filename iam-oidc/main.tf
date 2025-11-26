@@ -78,6 +78,7 @@ data "aws_iam_policy_document" "state_access" {
   }
 }
 
+
 resource "aws_iam_policy" "state_access" {
   name =  "${aws_iam_role.k8-aws-tf-apply.name}-state-access"
   policy = data.aws_iam_policy_document.state_access.json
@@ -97,6 +98,7 @@ locals {
   ec2_profile_name = "k8s-ec2-ssm-profile"
   ec2_role_arn = "arn:aws:iam::${data.aws_caller_identity.me.account_id}:role/${local.ec2_role_name}"
   ec2_profile_arn = "arn:aws:iam::${data.aws_caller_identity.me.account_id}:instance-profile/${local.ec2_profile_name}"
+  ssm_send_command_policy_arn = "arn:aws:iam::${data.aws_caller_identity.me.account_id}:policy/k8s-ec2-ssm-send-command"
 }
 
 
@@ -128,6 +130,29 @@ resource "aws_iam_policy" "tf_apply_for_k8s_aws" {
         "Resource": local.ec2_role_arn,
         "Condition": { "StringEquals": { "iam:PassedToService": "ec2.amazonaws.com" } }
       },
+
+      #  allow this role to CREATE the SSM send-command policy ..CreatePolicy must use Resource="*"
+      {
+        "Sid"     = "CreateKthwSsmSendCommandPolicy"
+        "Effect"  = "Allow"
+        "Action"  = "iam:CreatePolicy"
+        "Resource" = "*"
+      },
+
+      #  allow this role to manage ONLY that one policy afterwards
+      {
+        "Sid"    = "ManageKthwSsmSendCommandPolicy"
+        "Effect" = "Allow"
+        "Action" = [
+          "iam:DeletePolicy",
+          "iam:GetPolicy",
+          "iam:GetPolicyVersion",
+          "iam:CreatePolicyVersion",
+          "iam:DeletePolicyVersion",
+          "iam:ListPolicyVersions",
+        ]
+        "Resource" = local.ssm_send_command_policy_arn
+      }
     ]
 
   })
