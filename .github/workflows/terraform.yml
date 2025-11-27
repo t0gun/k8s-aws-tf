@@ -96,3 +96,17 @@ jobs:
         if: github.event.inputs.action == 'destroy'
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: terraform destroy -auto-approve -input=false
+
+
+      - name: Capture Terraform outputs to files
+        working-directory: infra
+        run: |
+          terraform output -json > terraform-outputs.json
+
+      - name: Upload Terraform outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-outputs
+          path: |
+            infra/terraform-outputs.json
+          retention-days: 7
