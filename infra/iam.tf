@@ -14,22 +14,38 @@ data "aws_iam_policy_document" "ec2_trust" {
 
 }
 
+data "aws_caller_identity" "current" {}
+
 data "aws_iam_policy_document" "ec2_ssm_send_command" {
-  # Allow the EC2 nodes to send SSM commands, but only to instances
-  # tagged Name=server|node-0|node-1
+  # 1) Allow using the AWS-RunShellScript document itself
   statement {
-    sid    = "AllowSendCommandToKthwNodes"
+    sid    = "AllowRunShellScriptDocument"
     effect = "Allow"
 
     actions = [
       "ssm:SendCommand",
     ]
 
-    # Use "*" because AWS-RunShellScript lives under an AWS-owned account
-    # and the effective ARN is: arn:aws:ssm:REGION::document/AWS-RunShellScript
-    resources = ["*"]
+    # AWS-owned document ARN (note empty account id segment)
+    resources = [
+      "arn:aws:ssm:${var.region}::document/AWS-RunShellScript"
+    ]
+  }
 
-    # Limit which instances they can target
+  # 2) Restrict which instances can be targeted (by tag)
+  statement {
+    sid    = "AllowSendCommandToTaggedInstances"
+    effect = "Allow"
+
+    actions = [
+      "ssm:SendCommand",
+    ]
+
+    # Only EC2 instances in *your* account
+    resources = [
+      "arn:aws:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:instance/*"
+    ]
+
     condition {
       test     = "StringEquals"
       variable = "ssm:resourceTag/Name"
@@ -41,6 +57,21 @@ data "aws_iam_policy_document" "ec2_ssm_send_command" {
       ]
     }
   }
+
+  # 3) Read-side APIs
+  statement {
+    sid    = "AllowDescribeAndListCommands"
+    effect = "Allow"
+
+    actions = [
+      "ssm:DescribeInstanceInformation",
+      "ssm:ListCommands",
+      "ssm:ListCommandInvocations",
+    ]
+
+    resources = ["*"]
+  }
+}
 
   # Read-side APIs used for debugging / checking status
   statement {
