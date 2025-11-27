@@ -30,17 +30,6 @@ data "aws_iam_policy_document" "ec2_ssm_send_command" {
       "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:document/AWS-RunShellScript"
     ]
 
-    #: only allow sending to instances with these tags
-    condition {
-      test     = "StringEquals"
-      variable = "ssm:resourceTag/Name"
-
-      values = [
-        "server",
-        "node-0",
-        "node-1",
-      ]
-    }
   }
 }
 
