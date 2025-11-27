@@ -1,4 +1,4 @@
-name: Terraform (Manual)
+name: Terraform
 
 on:
   workflow_dispatch:
