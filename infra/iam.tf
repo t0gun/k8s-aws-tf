@@ -14,8 +14,6 @@ data "aws_iam_policy_document" "ec2_trust" {
 
 }
 
-data "aws_caller_identity" "current" {}
-
 data "aws_iam_policy_document" "ec2_ssm_send_command" {
   # 1) Allow using the AWS-RunShellScript document itself
   statement {
@@ -41,7 +39,7 @@ data "aws_iam_policy_document" "ec2_ssm_send_command" {
       "ssm:SendCommand",
     ]
 
-    # Only EC2 instances in *your* account
+    # Only EC2 instances in  account
     resources = [
       "arn:aws:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:instance/*"
     ]
@@ -59,21 +57,6 @@ data "aws_iam_policy_document" "ec2_ssm_send_command" {
   }
 
   # 3) Read-side APIs
-  statement {
-    sid    = "AllowDescribeAndListCommands"
-    effect = "Allow"
-
-    actions = [
-      "ssm:DescribeInstanceInformation",
-      "ssm:ListCommands",
-      "ssm:ListCommandInvocations",
-    ]
-
-    resources = ["*"]
-  }
-}
-
-  # Read-side APIs used for debugging / checking status
   statement {
     sid    = "AllowDescribeAndListCommands"
     effect = "Allow"
