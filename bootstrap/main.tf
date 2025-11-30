@@ -1,8 +1,9 @@
 
 resource "aws_s3_bucket" "state" {
   bucket = var.state_bucket
+  force_destroy = true
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
@@ -45,7 +46,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "state" {
     # Keep only recent noncurrent versions
     noncurrent_version_expiration {
       noncurrent_days           = 30 # delete version older than 30 days
-      newer_noncurrent_versions = 20 # but always keep he 20 most recent
+      newer_noncurrent_versions = 20 # but always keep the 20 most recent
     }
 
     # clean up delete markers once there are no current versions at that key
